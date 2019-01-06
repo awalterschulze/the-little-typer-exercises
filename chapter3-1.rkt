@@ -20,7 +20,8 @@
   )
 )
 
-(at-least-two 0)
-(at-least-two 1)
-(at-least-two 2)
-(at-least-two 3)
+(check-same Atom (at-least-two 0) 'nil)
+(check-same Atom (at-least-two 1) 'nil)
+(check-same Atom (at-least-two 2) 't)
+(check-same Atom (at-least-two 3) 't)
+(check-same Atom (at-least-two 100) 't)
