@@ -3,10 +3,10 @@
 ## Getting Started
 
   1. Install [Racket](https://racket-lang.org/)
-  2. Open Dr Racket
+  2. Open DrRacket
   3. File -> Install Package
-  4. In the package name field, type pie and then click the "Install" button.
-  5. To use Pie, begin a file with #lang pie in DrRacket.
+  4. In the package name field, type pie and then click the `Install` button.
+  5. To use Pie, begin a file with `#lang pie` in DrRacket.
 
 
 
