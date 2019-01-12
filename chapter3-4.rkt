@@ -61,3 +61,28 @@
 
 (check-same Nat (max 19 20) 20)
 (check-same Nat (max 19 19) 19)
+
+;; A second, better implementation, that I learned from Ayman Osman,
+;; https://gist.github.com/aymanosman/9db1db11755ef4b4759c4ee9a4bdb515
+;; where we deconstruct both x and y at the "same" time.
+
+(claim max2 (-> Nat Nat Nat))
+(define max2
+  (lambda (x)
+    (rec-Nat x
+      (the (-> Nat Nat) (lambda (y) y))
+      (lambda (x-1 max-x-1)
+        (lambda (y) 
+          (add1 (rec-Nat y
+            x-1
+            (lambda (y-1 _)
+              (max-x-1 y-1)
+            ))))))))
+
+(check-same Nat (max2 2 4) 4)
+(check-same Nat (max2 4 2) 4)
+(check-same Nat (max2 0 1) 1)
+(check-same Nat (max2 1 0) 1)
+
+(check-same Nat (max2 19 20) 20)
+(check-same Nat (max2 19 19) 19)
