@@ -1,5 +1,7 @@
 # Exercises for the book - [The Little Typer](http://thelittletyper.com/)
 
+Most exercises are adapted from assignments at Indiana University
+
 ## Getting Started
 
   1. Install [Racket](https://racket-lang.org/)
