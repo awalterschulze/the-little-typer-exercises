@@ -2,8 +2,8 @@ module Pie.Check
     (checkSame) 
 where
 
-checkSame :: (Show a) => String -> a -> a -> IO ()
+checkSame :: (Eq a, Show a) => String -> a -> a -> IO ()
 checkSame s x y =
-    if (show x) == (show y) 
+    if x == y
     then return ()
-    else putStrLn $ s ++ ": <" ++ show x ++ "> /= <" ++ show y ++ ">"
+    else putStrLn $ "FAIL: " ++ s ++ ": <" ++ show x ++ "> /= <" ++ show y ++ ">"

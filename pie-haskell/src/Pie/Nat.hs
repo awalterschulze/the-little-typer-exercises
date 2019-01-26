@@ -1,4 +1,4 @@
-{-# LANGUAGE StandaloneDeriving #-}
+{-# LANGUAGE FlexibleInstances #-}
 
 module Pie.Nat (
   Nat, add1, zero
@@ -7,6 +7,7 @@ module Pie.Nat (
 ) where
 
 import Pie.Check
+import Data.Functor.Classes(Eq1(..), Show1(..), showsUnaryWith)
 import Data.Functor.Foldable (cata, unfix, Fix(..), para)
 
 -- | 
@@ -15,10 +16,15 @@ import Data.Functor.Foldable (cata, unfix, Fix(..), para)
 data NatF r =
     SuccF r
     | ZeroF
-    deriving (Eq, Show)
 
 -- This allows us to define a fixpoint of this recursive data structure:
-type Nat = Fix NatF
+newtype Nat = Nat (Fix NatF)
+
+instance Show Nat where
+    show = show . toInt
+
+instance Eq Nat where
+    (==) x y = toInt x == toInt y
 
 -- The fix point repeatedly provides the fix point as the type parameter.
 -- newtype Fix f = Fix (f (Fix f))
@@ -30,18 +36,32 @@ instance Functor NatF where
     fmap f (SuccF r) = SuccF (f r)
     fmap _ ZeroF = ZeroF
 
+-- This can be automatically derived: 
+-- https://stackoverflow.com/questions/43567005/no-instance-for-data-functor-classes-show1-exprf
+-- , but I preferered manually deriving an implementation from: 
+-- https://mail.haskell.org/pipermail/libraries/2016-January/026536.html
+instance Eq1 NatF where
+    liftEq eq ZeroF ZeroF = True
+    liftEq eq (SuccF x) (SuccF y) = eq x y
+    liftEq _ _ _ = False
+
+-- http://hackage.haskell.org/package/base-4.12.0.0/docs/src/Data.Functor.Classes.html
+-- instance Show1 Maybe where
+--     liftShowsPrec _ _ _ Nothing = showString "Nothing"
+--     liftShowsPrec sp _ d (Just x) = showsUnaryWith sp "Just" d x
+
 add1 :: Nat -> Nat
-add1 n = Fix (SuccF n)
+add1 (Nat n) = Nat $ Fix $ SuccF n
 
 zero :: Nat
-zero = Fix ZeroF
+zero = Nat $ Fix ZeroF
 
 fromInt :: Int -> Nat
 fromInt i = foldl (\n _ -> add1 n) zero [1..i]
 
 whichNat :: Nat -> r -> (Nat -> r) -> r
-whichNat (Fix ZeroF) z _ = z
-whichNat (Fix (SuccF n_1)) _ f = f n_1
+whichNat (Nat (Fix ZeroF)) z _ = z
+whichNat (Nat (Fix (SuccF n_1))) _ f = f (Nat n_1)
 
 -- unfix is defined in Data.Functor.Foldable
 -- unfix is used to go down one level.
@@ -86,7 +106,7 @@ cata' algebra fixed =
 
 -- | iterNat is a catamorphism.
 iterNat :: Nat -> r -> (r -> r) -> r
-iterNat n base step = cata' (iterFAlgebra base step) n
+iterNat (Nat n) base step = cata' (iterFAlgebra base step) n
 
 -- iterFAlgebra simply returns base or applies step, 
 -- based on whether the natural number is zero or a successor.
@@ -130,10 +150,10 @@ para' algebra fixed =
 
 -- | recNat is a paramorphism.
 recNat :: Nat -> r -> (Nat -> r -> r) -> r
-recNat n base step = para' (recRAlgebra base step) n
+recNat (Nat n) base step = para' (recRAlgebra base step) n
 
 -- recRAlgebra simply returns base or applies step, 
 -- based on whether the natural number is zero or a successor.
-recRAlgebra :: r -> (Fix NatF -> r -> r) -> NatF (Fix NatF, r) -> r
+recRAlgebra :: r -> (Nat -> r -> r) -> NatF (Fix NatF, r) -> r
 recRAlgebra base step ZeroF = base
-recRAlgebra base step (SuccF (n, r)) = step n r
+recRAlgebra base step (SuccF (n, r)) = step (Nat n) r

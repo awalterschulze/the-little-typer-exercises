@@ -87,15 +87,15 @@ plusRec :: Nat -> Nat -> Nat
 plusRec x y =
     recNat x y stepPlusRec
 
--- checks2 :: IO ()
--- checks2 =
-    -- checkSame "plusIter" (plusIter (fromInt 1) (fromInt 3)) (fromInt 4)
-    -- checkSame "plusIter" (plusIter (fromInt 3) (fromInt 1)) (fromInt 4)
-    -- checkSame "plusIter" (plusIter (fromInt 3) (fromInt 0)) (fromInt 3)
-    -- checkSame "plusIter" (plusIter (fromInt 0) (fromInt 3)) (fromInt 3)
-    -- checkSame "plusIter" (plusIter (fromInt 100) (fromInt 200)) (fromInt 300)
-    -- checkSame "plusRec" (plusRec (fromInt 1) (fromInt 3)) (fromInt 4)
-    -- checkSame "plusRec" (plusRec (fromInt 3) (fromInt 1)) (fromInt 4)
-    -- checkSame "plusRec" (plusRec (fromInt 3) (fromInt 0)) (fromInt 3)
-    -- checkSame "plusRec" (plusRec (fromInt 0) (fromInt 3)) (fromInt 3)
-    -- checkSame "plusRec" (plusRec (fromInt 100) (fromInt 200)) (fromInt 300)
+checks2 :: IO ()
+checks2 = do
+    checkSame "plusIter" (plusIter (fromInt 1) (fromInt 3)) (fromInt 4)
+    checkSame "plusIter" (plusIter (fromInt 3) (fromInt 1)) (fromInt 4)
+    checkSame "plusIter" (plusIter (fromInt 3) (fromInt 0)) (fromInt 3)
+    checkSame "plusIter" (plusIter (fromInt 0) (fromInt 3)) (fromInt 3)
+    checkSame "plusIter" (plusIter (fromInt 100) (fromInt 200)) (fromInt 300)
+    checkSame "plusRec" (plusRec (fromInt 1) (fromInt 3)) (fromInt 4)
+    checkSame "plusRec" (plusRec (fromInt 3) (fromInt 1)) (fromInt 4)
+    checkSame "plusRec" (plusRec (fromInt 3) (fromInt 0)) (fromInt 3)
+    checkSame "plusRec" (plusRec (fromInt 0) (fromInt 3)) (fromInt 3)
+    checkSame "plusRec" (plusRec (fromInt 100) (fromInt 200)) (fromInt 300)
