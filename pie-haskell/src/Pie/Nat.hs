@@ -6,7 +6,6 @@ module Pie.Nat (
   , fromInt, toInt
 ) where
 
-import Pie.Check
 import Data.Functor.Foldable (cata, unfix, Fix(..), para)
 
 -- | 
@@ -86,9 +85,9 @@ cata' algebra fixed =
     in algebra fa
 
 -- iterNat implemented with a Fix, but without a recursion scheme
--- iterNat :: Nat -> r -> (r -> r) -> r
--- iterNat (Fix ZeroF) z _ = z
--- iterNat (Fix (SuccF n_1)) z f = f (iterNat n_1 z f)
+iterNat' :: Nat -> r -> (r -> r) -> r
+iterNat' (Nat (Fix ZeroF)) z _ = z
+iterNat' (Nat (Fix (SuccF n_1))) z f = f (iterNat' (Nat n_1) z f)
 
 -- | iterNat is a catamorphism.
 iterNat :: Nat -> r -> (r -> r) -> r
@@ -129,10 +128,10 @@ para' algebra fixed =
         -- apply algebra to current level and result
     in algebra ffa
 
--- recNat implemented with a Fix, but without a recursion scheme
--- recNat :: Nat -> r -> (Nat -> r -> r) -> r
--- recNat (Fix ZeroF) z _ = z
--- recNat (Fix (SuccF n_1)) z f = f n_1 (recNat n_1 z f)
+-- recNat' implemented with a Fix, but without a recursion scheme
+recNat' :: Nat -> r -> (Nat -> r -> r) -> r
+recNat' (Nat (Fix ZeroF)) z _ = z
+recNat' (Nat (Fix (SuccF n_1))) z f = f (Nat n_1) (recNat' (Nat n_1) z f)
 
 -- | recNat is a paramorphism.
 recNat :: Nat -> r -> (Nat -> r -> r) -> r
