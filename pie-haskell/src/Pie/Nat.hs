@@ -7,7 +7,6 @@ module Pie.Nat (
 ) where
 
 import Pie.Check
-import Data.Functor.Classes(Eq1(..), Show1(..), showsUnaryWith)
 import Data.Functor.Foldable (cata, unfix, Fix(..), para)
 
 -- | 
@@ -35,20 +34,6 @@ instance Eq Nat where
 instance Functor NatF where
     fmap f (SuccF r) = SuccF (f r)
     fmap _ ZeroF = ZeroF
-
--- This can be automatically derived: 
--- https://stackoverflow.com/questions/43567005/no-instance-for-data-functor-classes-show1-exprf
--- , but I preferered manually deriving an implementation from: 
--- https://mail.haskell.org/pipermail/libraries/2016-January/026536.html
-instance Eq1 NatF where
-    liftEq eq ZeroF ZeroF = True
-    liftEq eq (SuccF x) (SuccF y) = eq x y
-    liftEq _ _ _ = False
-
--- http://hackage.haskell.org/package/base-4.12.0.0/docs/src/Data.Functor.Classes.html
--- instance Show1 Maybe where
---     liftShowsPrec _ _ _ Nothing = showString "Nothing"
---     liftShowsPrec sp _ d (Just x) = showsUnaryWith sp "Just" d x
 
 add1 :: Nat -> Nat
 add1 (Nat n) = Nat $ Fix $ SuccF n
