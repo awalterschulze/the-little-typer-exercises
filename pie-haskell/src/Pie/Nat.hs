@@ -113,7 +113,8 @@ toInt n = iterNat n 0 (+1)
 -- type RAlgebra f r = f (Fix f, r) -> r
 -- => para :: RAlgebra NatF r -> Nat -> r
 
--- implemenation derived from types.
+-- implemenation derived from types (with a bug) and fixed by looking at
+-- https://blog.sumtypeofway.com/recursion-schemes-part-iii-folds-in-context/
 para' :: Functor f => (f (Fix f, a) -> a) -> Fix f -> a
 para' algebra fixed =
     let -- go down one level
