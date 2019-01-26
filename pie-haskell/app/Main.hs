@@ -1,7 +1,9 @@
 module Main where
 
-import qualified Chapter3 as C3
+import qualified Chapter3
+import qualified Chapter4
 
 main :: IO ()
 main = do
-    C3.checks
+    Chapter3.checks
+    Chapter4.checks

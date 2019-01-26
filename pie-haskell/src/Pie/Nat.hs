@@ -71,7 +71,8 @@ whichNat (Nat (Fix (SuccF n_1))) _ f = f (Nat n_1)
 -- type FAlgebra f r = f r -> r
 -- => cata :: FAlgebra NatF r -> Nat -> r
 
--- implementation derived from:  https://blog.sumtypeofway.com/recursion-schemes-part-2/
+-- implementation derived from:  
+-- https://blog.sumtypeofway.com/recursion-schemes-part-2/
 -- cata is a bottom up morphism over a functor.
 cata' :: Functor f => (f a -> a) -> Fix f -> a
 cata' algebra fixed = 
@@ -119,12 +120,11 @@ para' algebra fixed =
         unfixed = unfix fixed            -- :: f (Fix f)
         -- create curried algebra to apply to lower level
         para_algebra = para' algebra     -- :: Fix f -> a
+        both t = (t, para_algebra t)     -- :: Fix f -> (Fix f, a)
         -- apply algebra to lower level
         -- fmap :: (a -> b) -> f a -> f b
-        -- => fmap :: (Fix f -> a) -> f (Fix f) -> f a
-        fa = fmap para_algebra unfixed   -- :: f a
-        -- combine result with current level's value
-        ffa = fmap (\a -> (fixed, a)) fa -- :: f (Fix f, a)
+        -- => fmap :: (Fix f -> (Fix f, a)) -> f (Fix f) -> f (Fix f, a)
+        ffa = fmap both unfixed   -- :: f (Fix f, a)
         -- apply algebra to current level and result
     in algebra ffa
 
