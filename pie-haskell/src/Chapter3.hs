@@ -1,9 +1,16 @@
 -- | 
 -- # Chapter 3 Exercises
-module Chapter3 where
+module Chapter3 (checks) where
 
 import Pie.Nat
 import Pie.Check (checkSame)
+
+checks :: IO ()
+checks = do
+    checks1
+    checks2
+    checks3a
+    checks3b
 
 -- ## 3.1
 -- Define a function called at-least-two? that takes one Nat argument and evaluates to an Atom.
@@ -87,15 +94,97 @@ plusRec :: Nat -> Nat -> Nat
 plusRec x y =
     recNat x y stepPlusRec
 
+-- (check-same Nat (+ 1 3) 4)
+-- (check-same Nat (+ 3 1) 4)
+-- (check-same Nat (+ 3 0) 3)
+-- (check-same Nat (+ 0 3) 3)
+-- (check-same Nat (+ 100 200) 300)
+
 checks2 :: IO ()
 checks2 = do
-    checkSame "plusIter" (plusIter (fromInt 1) (fromInt 3)) (fromInt 4)
-    checkSame "plusIter" (plusIter (fromInt 3) (fromInt 1)) (fromInt 4)
-    checkSame "plusIter" (plusIter (fromInt 3) (fromInt 0)) (fromInt 3)
-    checkSame "plusIter" (plusIter (fromInt 0) (fromInt 3)) (fromInt 3)
-    checkSame "plusIter" (plusIter (fromInt 100) (fromInt 200)) (fromInt 300)
-    checkSame "plusRec" (plusRec (fromInt 1) (fromInt 3)) (fromInt 4)
-    checkSame "plusRec" (plusRec (fromInt 3) (fromInt 1)) (fromInt 4)
-    checkSame "plusRec" (plusRec (fromInt 3) (fromInt 0)) (fromInt 3)
-    checkSame "plusRec" (plusRec (fromInt 0) (fromInt 3)) (fromInt 3)
-    checkSame "plusRec" (plusRec (fromInt 100) (fromInt 200)) (fromInt 300)
+    checkSame "plusIter1" (plusIter (fromInt 1) (fromInt 3)) (fromInt 4)
+    checkSame "plusIter2" (plusIter (fromInt 3) (fromInt 1)) (fromInt 4)
+    checkSame "plusIter3" (plusIter (fromInt 3) (fromInt 0)) (fromInt 3)
+    checkSame "plusIter4" (plusIter (fromInt 0) (fromInt 3)) (fromInt 3)
+    checkSame "plusIter5" (plusIter (fromInt 100) (fromInt 200)) (fromInt 300)
+    checkSame "plusRec1" (plusRec (fromInt 1) (fromInt 3)) (fromInt 4)
+    checkSame "plusRec2" (plusRec (fromInt 3) (fromInt 1)) (fromInt 4)
+    checkSame "plusRec3" (plusRec (fromInt 3) (fromInt 0)) (fromInt 3)
+    checkSame "plusRec4" (plusRec (fromInt 0) (fromInt 3)) (fromInt 3)
+    checkSame "plusRec5" (plusRec (fromInt 100) (fromInt 200)) (fromInt 300)
+
+-- ## 3.3
+-- Define a function called exp that takes two Nat arguments and evaluates to a Nat.
+-- exp evaluates to the exponentiation, a^b, of the two passed arguments.
+
+-- (claim step-* (-> Nat Nat Nat Nat))
+-- (define step-*
+--   (lambda (j j-1 mul-1)
+--     (+ j mul-1)
+--     ))
+
+-- (claim * (-> Nat Nat Nat))
+-- (define *
+--   (lambda (i j)
+--     (rec-Nat i
+--       0
+--       (step-* j)
+--     )
+--   )
+-- )
+
+plus :: Nat -> Nat -> Nat
+plus = plusRec
+
+stepTimes :: Nat -> Nat -> Nat -> Nat
+stepTimes y x_1 res = (plus y res)
+
+times :: Nat -> Nat -> Nat
+times x y = recNat x zero (stepTimes y)
+
+-- (check-same Nat (* 3 4) 12)
+-- (check-same Nat (* 0 4) 0)
+-- (check-same Nat (* 4 0) 0)
+-- (check-same Nat (* 4 100) 400)
+
+checks3a :: IO ()
+checks3a = do
+    checkSame "multiply1" (times (fromInt 3) (fromInt 4)) (fromInt 12)
+    checkSame "multiply2" (times (fromInt 0) (fromInt 4)) (fromInt 0)
+    checkSame "multiply3" (times (fromInt 4) (fromInt 0)) (fromInt 0)
+    checkSame "multiply4" (times (fromInt 4) (fromInt 100)) (fromInt 400)
+
+-- (claim step-^ (-> Nat Nat Nat Nat))
+-- (define step-^
+--   (lambda (j j-1 pow-1)
+--     (* j pow-1)
+--   ))
+
+-- (claim ^ (-> Nat Nat Nat))
+-- (define ^
+--   (lambda (i j)
+--     (rec-Nat j
+--       1
+--       (step-^ i)
+--       )))
+
+power :: Nat -> Nat -> Nat
+power x y =
+    recNat y (add1 zero) (stepPower x)
+
+stepPower :: Nat -> Nat -> Nat -> Nat
+stepPower x y_1 res = times x res
+
+-- (check-same Nat (^ 0 2) 0)
+-- (check-same Nat (^ 2 0) 1)
+-- (check-same Nat (^ 2 2) 4)
+-- (check-same Nat (^ 2 3) 8)
+-- (check-same Nat (^ 10 3) 1000)
+
+checks3b :: IO ()
+checks3b = do
+    checkSame "power1" (power (fromInt 0) (fromInt 2)) (fromInt 0)
+    checkSame "power2" (power (fromInt 2) (fromInt 0)) (fromInt 1)
+    checkSame "power3" (power (fromInt 2) (fromInt 2)) (fromInt 4)
+    checkSame "power4" (power (fromInt 2) (fromInt 3)) (fromInt 8)
+    checkSame "power5" (power (fromInt 10) (fromInt 3)) (fromInt 1000)
