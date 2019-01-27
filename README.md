@@ -11,3 +11,7 @@ Most exercises are adapted from assignments at Indiana University
   5. To use Pie, begin a file with `#lang pie` in DrRacket.
   6. [Testing Pie Programs](https://docs.racket-lang.org/pie/index.html#%28form._%28%28lib._pie%2Fmain..rkt%29._check-same%29%29)
 
+## Exercises
+
+  - Racket exercises were taken from: https://github.com/paulcadman/the-little-typer
+  - Haskell exercises are done using recursion schemes: https://blog.sumtypeofway.com/an-introduction-to-recursion-schemes/
