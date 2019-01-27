@@ -23,6 +23,9 @@ dependencies:
 - base >= 4.7 && < 5
 - recursion-schemes
 - containers
+- HUnit
+- tasty-hunit
+- tasty
 
 library:
   source-dirs: src

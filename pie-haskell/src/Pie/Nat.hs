@@ -4,9 +4,14 @@ module Pie.Nat (
   Nat, add1, zero
   , whichNat, iterNat, recNat
   , fromInt, toInt
+  , tests
 ) where
 
 import Data.Functor.Foldable (cata, unfix, Fix(..), para)
+import qualified Test.Tasty                    as T
+import qualified Test.Tasty.HUnit              as T
+import qualified Data.Map.Strict               as M
+import Debug.Trace (trace)
 
 -- | 
 -- NatF is the parametric version of the Nat data type:
@@ -163,9 +168,59 @@ ana' coalgebra a =
         unfixed = fmap ana_coalgebra fa -- :: f (Fix f)
     in Fix unfixed
 
+-- | fromInt implemented using an anamorphism.
 fromInt :: Int -> Nat
 fromInt i = Nat $ ana' stepFromInt i
 
 stepFromInt :: Int -> NatF Int
 stepFromInt 0 = ZeroF
 stepFromInt n = SuccF (n - 1)
+
+-- implementation derived from:
+-- https://blog.sumtypeofway.com/recursion-schemes-part-iii-folds-in-context/
+-- apomorphism is the opposite of paramorphism
+-- see how the either (sum) is the opposite of the tuple (product)
+apo' :: Functor f => (a -> f (Either (Fix f) a)) -> a -> Fix f
+apo' coalgebra a =
+    let ffa = coalgebra a -- :: f (Either (Fix f) a)
+        apo_coalgebra = apo' coalgebra -- :: a -> Fix f
+        fromEither e = -- :: Either (Fix f) a -> Fix f
+            case e of 
+                (Left fixed) -> fixed
+                (Right a') -> apo_coalgebra a'
+        fff = fmap fromEither ffa -- :: f (Fix f)
+    in Fix fff
+
+-- | fromInt' implemented using an apomorphism.
+fromInt' :: Int -> Nat
+fromInt' i = Nat $ apo' stepFromInt' i
+
+-- | interned contains a map from Int to Nat
+-- Only one Nat needs to exist for every number.
+-- here we memorize just a few to showcase apomorphism.
+interned :: M.Map Int Nat
+interned = M.fromList [
+        (5, add1 (add1 (add1 (add1 (add1 zero)))))
+        , (10, fromInt 10)
+    ]
+
+stepFromInt' :: Int -> NatF (Either (Fix NatF) Int)
+stepFromInt' n = case M.lookup (n - 1) interned of
+    -- short circuit and rather return already existing value.
+    (Just (Nat exists)) -> 
+        trace "\nshort circuit and return interned 5, instead of recursing\n"
+        SuccF (Left (exists)) 
+    Nothing -> if n == 0
+        then ZeroF
+        else SuccF (Right (n - 1))
+
+tests = T.testGroup "apomorphism"
+    [
+        T.testCase "3" $ T.assertEqual "3" (add1 (add1 (add1 zero))) (fromInt' 3)
+        , T.testCase "0" $ T.assertEqual "0" zero (fromInt' 0)
+        , T.testCase "5" $ T.assertEqual "5" (fromInt 5) (fromInt' 5)
+        -- these should all use the intern value.
+        , T.testCase "6" $ T.assertEqual "6" (fromInt 6) (fromInt' 6)
+        , T.testCase "7" $ T.assertEqual "7" (fromInt 7) (fromInt' 7)
+        , T.testCase "8" $ T.assertEqual "8" (fromInt 8) (fromInt' 8)
+    ]
