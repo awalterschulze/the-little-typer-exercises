@@ -9,6 +9,9 @@ checks = do
     checks1
     checks2
     checks3
+    checks4a
+    checks4b
+    checks4c
 
 -- ## 5.1
 -- Define a function called sum-List that takes one List Nat argument and
@@ -203,3 +206,65 @@ checks3 = do
     checkSame "filterList1" (filterList id onetwothree) onetwothree
     checkSame "filterList2" (filterList id oneZeroTwoThree) onetwothree
     checkSame "filterList3" (filterList notZero oneZeroTwoThree) (zero <:> nil)
+
+
+-- # 5.4
+-- Define a function called sort-List-Nat which takes one (List Nat) argument
+-- and evaluates to a (List Nat) consisting of the elements from the list
+-- argument sorted in ascending order.
+
+-- solution adopted from https://gist.github.com/aymanosman/b49dc2b8e1f06c9b22f1d5a607b2df26
+
+lessThan :: Nat -> Nat -> Bool
+lessThan n = recNat n
+    (\m -> True)
+    (\n_1 lessThanN_1 m ->
+        recNat m
+        False
+        (\m_1 _ -> lessThanN_1 m_1)
+    )
+
+checks4a :: IO ()
+checks4a = do
+    checkSame "lessThan1" (lessThan (fromInt 4) (fromInt 2)) False
+    checkSame "lessThan2" (lessThan (fromInt 2) (fromInt 4)) True
+    checkSame "lessThan3" (lessThan (fromInt 1) (fromInt 0)) False
+    checkSame "lessThan4" (lessThan (fromInt 0) (fromInt 1)) True
+
+insert :: List Nat -> Nat -> List Nat
+insert ls = recList ls
+    (\x -> x <:> nil)
+    (\e _ insertIfLess x ->
+        if (lessThan x e)
+        then x <:> insertIfLess e
+        else e <:> insertIfLess x
+    )
+
+onethreefour :: List Nat
+onethreefour = fromInt 1 <:> (fromInt 3 <:> (fromInt 4 <:> nil))
+
+onetwothreefour :: List Nat
+onetwothreefour = fromInt 1 <:> (fromInt 2 <:> (fromInt 3 <:> (fromInt 4 <:> nil)))
+
+checks4b :: IO ()
+checks4b = do
+    checkSame "insert1" (insert nil (fromInt 2)) ((fromInt 2) <:> nil)
+    checkSame "insert2" (insert onethreefour (fromInt 0)) ((fromInt 0) <:> onethreefour)
+    checkSame "insert3" (insert onethreefour (fromInt 5)) (fromInt 1 <:> (fromInt 3 <:> (fromInt 4 <:> (fromInt 5 <:> nil))))
+    checkSame "insert4" (insert onethreefour (fromInt 2)) onetwothreefour
+    checkSame "insert5" (insert onethreefour (fromInt 3)) (fromInt 1 <:> (fromInt 3 <:> (fromInt 3 <:> (fromInt 4 <:> nil))))
+
+insertSort :: List Nat -> List Nat
+insertSort ls = recList ls
+    nil
+    (\e _ sorted ->
+        insert sorted e
+    )
+
+checks4c :: IO ()
+checks4c = do
+    checkSame "insertSort1" (insertSort nil) nil
+    checkSame "insertSort2" (insertSort ((fromInt 0) <:> onethreefour)) ((fromInt 0) <:> onethreefour)
+    checkSame "insertSort3" (insertSort ((fromInt 5) <:> onethreefour)) (fromInt 1 <:> (fromInt 3 <:> (fromInt 4 <:> (fromInt 5 <:> nil))))
+    checkSame "insertSort4" (insertSort ((fromInt 2) <:> onethreefour)) onetwothreefour
+    checkSame "insertSort5" (insertSort ((fromInt 3) <:> onethreefour)) (fromInt 1 <:> (fromInt 3 <:> (fromInt 3 <:> (fromInt 4 <:> nil))))
