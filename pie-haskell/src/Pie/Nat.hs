@@ -40,9 +40,6 @@ add1 (Nat n) = Nat $ Fix $ SuccF n
 zero :: Nat
 zero = Nat $ Fix ZeroF
 
-fromInt :: Int -> Nat
-fromInt i = foldl (\n _ -> add1 n) zero [1..i]
-
 whichNat :: Nat -> r -> (Nat -> r) -> r
 whichNat (Nat (Fix ZeroF)) z _ = z
 whichNat (Nat (Fix (SuccF n_1))) _ f = f (Nat n_1)
@@ -142,3 +139,33 @@ recNat (Nat n) base step = para' (recRAlgebra base step) n
 recRAlgebra :: r -> (Nat -> r -> r) -> NatF (Fix NatF, r) -> r
 recRAlgebra base step ZeroF = base
 recRAlgebra base step (SuccF (n, r)) = step (Nat n) r
+
+-- anamorphism is the opposite of catamorphism.
+-- anamorphism's type from Data.Functor.Foldable:
+-- ana :: (a -> Base t a) -> a -> t
+-- Base is defined for a Fix data type:
+-- type Base (Fix f) = f
+-- This means for the Fix type, ana is defined as:
+-- => ana :: (a -> f a) -> a -> Fix f
+-- For our fix type Nat, ana is defined as:
+-- => ana :: (a -> NatF a) -> a -> Fix NatF
+-- => ana :: (r -> NatF r) -> r -> Nat
+
+-- implemenation derived from:
+-- https://blog.sumtypeofway.com/recursion-schemes-part-iii-folds-in-context/
+-- cata f = out >>> fmap (cata f) >>> f
+-- ana f = In <<< fmap (ana f) <<< f
+ana' :: Functor f => (a -> f a) -> a -> Fix f
+ana' coalgebra a = 
+    let 
+        fa = coalgebra a -- :: f a
+        ana_coalgebra = ana' coalgebra -- :: a -> Fix f
+        unfixed = fmap ana_coalgebra fa -- :: f (Fix f)
+    in Fix unfixed
+
+fromInt :: Int -> Nat
+fromInt i = Nat $ ana' stepFromInt i
+
+stepFromInt :: Int -> NatF Int
+stepFromInt 0 = ZeroF
+stepFromInt n = SuccF (n - 1)
