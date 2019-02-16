@@ -16,7 +16,7 @@ https://github.com/paulcadman/the-little-typer
 
 ## Other Observations
 
-  - `rec-Nat` and `rec-List` are paramorphisms, see [Nat.hs](https://github.com/awalterschulze/the-little-typer-exercises/blob/master/pie-haskell/src/Pie/Nat.hs) and [List.hs](https://github.com/awalterschulze/the-little-typer-exercises/blob/master/pie-haskell/src/Pie/List.hs).  Exercises from Chapter 3, 4 and 5, were rewritten using these implementations.
+  - `rec-Nat` and `rec-List` are paramorphisms, see [Nat.hs](https://github.com/awalterschulze/the-little-typer-exercises/blob/master/pie-haskell/src/Pie/Nat.hs) and [List.hs](https://github.com/awalterschulze/the-little-typer-exercises/blob/master/pie-haskell/src/Pie/List.hs).  Exercises from Chapter 3, 4 and 5 were rewritten using these implementations.
   
     For more information on recursion schemes, see [An introduction to recursion schemes - Patrick Thomson](https://blog.sumtypeofway.com/an-introduction-to-recursion-schemes/)
 
