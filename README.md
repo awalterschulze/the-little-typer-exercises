@@ -13,5 +13,10 @@ Most exercises are adapted from assignments at Indiana University
 
 ## Exercises
 
-  - Racket exercises were taken from: https://github.com/paulcadman/the-little-typer
+  - Racket exercises were lovingly curated by Paul Cadman https://github.com/paulcadman/the-little-typer
   - Haskell exercises are done using recursion schemes: https://blog.sumtypeofway.com/an-introduction-to-recursion-schemes/
+
+# Observations
+
+  - `rec-Nat` and `rec-List` are paramorphisms, see [Nat.hs](https://github.com/awalterschulze/the-little-typer-exercises/blob/master/pie-haskell/src/Pie/Nat.hs) and [List.hs](https://github.com/awalterschulze/the-little-typer-exercises/blob/master/pie-haskell/src/Pie/List.hs)
+  - `same` is a Functor and `cong` is fmap, see [pie-haskell/Pie/Equal.hs](https://github.com/awalterschulze/the-little-typer-exercises/blob/master/pie-haskell/src/Pie/Equal.hs)
