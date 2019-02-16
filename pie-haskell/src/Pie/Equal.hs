@@ -6,14 +6,14 @@ module Pie.Equal (
 
 data Equal x = Equal x x
 
-same x :: Equal x
+same :: x -> Equal x
 same e = Equal e e
 
 cong :: (Equal x) -> (x -> y) -> (Equal y)
 cong (Equal from to) f = Equal (f from) (f to)
 
-instance Functor (Equal a) where
-    fmap = flip . cong
+instance Functor Equal where
+    fmap f e = cong e f
 
 -- # functor laws
 -- 1. fmap id = id
