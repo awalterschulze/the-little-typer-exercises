@@ -1,7 +1,5 @@
 #lang pie
 
-;; Exercise 9.2
-;;
 ;; Define a function called same-lists that states and proves that
 ;; if two values, e1 and e2, are equal and two lists, l1 and l2 are
 ;; equal then the two lists, (:: e1 l1) and (:: e2 l2) are also equal.
