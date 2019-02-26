@@ -1,7 +1,6 @@
 # Exercises for the book - [The Little Typer](http://thelittletyper.com/)
 
-Exercises were lovingly curated by Paul Cadman
-https://github.com/paulcadman/the-little-typer
+Exercises were lovingly curated by [Paul Cadman](https://github.com/paulcadman/the-little-typer)
 
 ## Getting Started
 
