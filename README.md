@@ -20,3 +20,5 @@ Exercises were lovingly curated by [Paul Cadman](https://github.com/paulcadman/t
   - `same` is a Functor and `cong` is fmap, see [Equal.hs](https://github.com/awalterschulze/the-little-typer-exercises/blob/master/pie-haskell/src/Pie/Equal.hs)
 
   - `replace` in Chapter 9 was quite hard for me to grasp.  I finally came up with a way to understand and use it and it seems like everyone in the study group came up with their own unique way.  See [discussion](https://groups.google.com/forum/#!msg/the-little-typer-study-group-london/759LwPE6E_g/s_nRUSbuBAAJ).
+
+  - Exercise 10.2 and 10.3 might be easier after reading Chapter 12.
