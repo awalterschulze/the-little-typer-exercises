@@ -13,7 +13,7 @@ Exercises were lovingly curated by [Paul Cadman](https://github.com/paulcadman/t
   
 ## Help
 
-  - `replace` in Chapter 9 was quite hard for me to grasp.  I finally came up with a way to understand and use it and it seems like everyone in the study group came up with their own unique way.  See [discussion in the Google Group](https://groups.google.com/forum/#!msg/the-little-typer-study-group-london/759LwPE6E_g/s_nRUSbuBAAJ) or [a print out of the discussion](https://github.com/awalterschulze/the-little-typer-exercises/issues/1) if you don't have permission.
+  - `replace` in Chapter 9 was quite hard for me to grasp, but I wasn't the only one.  [Andrew Helwer](https://github.com/ahelwer) has written up a blog post as a [preamble to Chapter 9](https://ahelwer.ca/post/2022-10-13-little-typer-ch9/), that I would recommend reading before reading Chapter 9. I also finally came up with a way to understand and use it and it seems like everyone in the study group came up with their own unique way.  See [discussion in the Google Group](https://groups.google.com/forum/#!msg/the-little-typer-study-group-london/759LwPE6E_g/s_nRUSbuBAAJ) or [a print out of the discussion](https://github.com/awalterschulze/the-little-typer-exercises/issues/1) if you don't have permission.
 
   - Exercise 10.2 and 10.3 might be easier after reading Chapter 12.
 
