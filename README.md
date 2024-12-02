@@ -10,7 +10,20 @@ Exercises were lovingly curated by [Paul Cadman](https://github.com/paulcadman/t
   4. In the package name field, type pie and then click the `Install` button.
   5. To use Pie, begin a file with `#lang pie` in DrRacket.
   6. [Testing Pie Programs](https://docs.racket-lang.org/pie/index.html#%28form._%28%28lib._pie%2Fmain..rkt%29._check-same%29%29)
-  
+
+## Exercises
+
+* [Chapter 3](./Chapter3.md)
+* [Chapter 4](./Chapter4.md)
+* [Chapter 5](./Chapter5.md)
+* [Chapter 7](./Chapter7.md)
+* [Chapter 8](./Chapter8.md)
+* [Chapter 9](./Chapter9.md)
+* [Chapter 10](./Chapter10.md)
+* [Chapter 11](./Chapter11.md)
+* [Chapter 12](./Chapter12.md)
+* [Chapter 13](./Chapter13.md)
+
 ## Help
 
   - `replace` in Chapter 9 was quite hard for me to grasp, but I wasn't the only one.  [Andrew Helwer](https://github.com/ahelwer) has written up a blog post as a [preamble to Chapter 9](https://ahelwer.ca/post/2022-10-13-little-typer-ch9/), that I would recommend reading before reading Chapter 9. I also finally came up with a way to understand and use it and it seems like everyone in the study group came up with their own unique way.  See [discussion in the Google Group](https://groups.google.com/forum/#!msg/the-little-typer-study-group-london/759LwPE6E_g/s_nRUSbuBAAJ) or [a print out of the discussion](https://github.com/awalterschulze/the-little-typer-exercises/issues/1) if you don't have permission.

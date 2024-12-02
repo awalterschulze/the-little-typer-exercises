@@ -7,7 +7,7 @@
 ;;  (Pi ((n Nat) (m Nat))
 ;;    (= Nat (+ n m) (+ m n))))
 ;;
-;; Bonus: Write the solution using the trans elimiator instead of
+;; Bonus: Write the solution using the trans eliminator instead of
 ;; the replace elimiator.
 ;; https://docs.racket-lang.org/pie/index.html#%28def._%28%28lib._pie%2Fmain..rkt%29._trans%29%29
 ;;
