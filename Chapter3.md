@@ -46,7 +46,7 @@ Nat. `gcd` evaluates to the greatest common divisor of the two passed arguments.
 <details>
 <summary>Hint</summary>
 <br>
-You might find some useful functions defined in this resource: https://www.andrew.cmu.edu/user/kk3n/recursionclass/chap2.pdf
+You might find this resource helpful: https://www.andrew.cmu.edu/user/kk3n/recursionclass/chap2.pdf.
 </details>
 
 [Answer](./chapter3-5-gcd.rkt)
