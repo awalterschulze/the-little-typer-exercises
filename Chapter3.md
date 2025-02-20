@@ -38,3 +38,15 @@ Define a function called `exp` that takes two Nat arguments and evaluates to a N
 Define a function called `max` that takes two Nat arguments and evaluates to a Nat. `max` evaluates to the larger of the two passed arguments.
 
 [Answer](./chapter3-4-max.rkt)
+
+## Exercise 5
+Define a function called `gcd` that takes two Nat arguments and evaluates to a
+Nat. `gcd` evaluates to the greatest common divisor of the two passed arguments.
+
+<details>
+<summary>Hint</summary>
+<br>
+You might find this resource helpful: https://www.andrew.cmu.edu/user/kk3n/recursionclass/chap2.pdf.
+</details>
+
+[Answer](./chapter3-5-gcd.rkt)
