@@ -49,7 +49,7 @@ Bonus: Write the solution using the [trans](https://docs.racket-lang.org/pie/ind
 
 ## Exercise 4
 
-Define a function called `mul-comm` that states and proves that `*` is associative.
+Define a function called `mul-assoc` that states and proves that `*` is associative.
 
 ```
 (claim mul-assoc
