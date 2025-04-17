@@ -39,7 +39,8 @@ Define a function called `max` that takes two Nat arguments and evaluates to a N
 
 [Answer](./chapter3-4-max.rkt)
 
-## Exercise 5
+## Exercise 5 (Advanced)
+
 Define a function called `gcd` that takes two Nat arguments and evaluates to a
 Nat. `gcd` evaluates to the greatest common divisor of the two passed arguments.
 

@@ -49,6 +49,26 @@ Bonus: Write the solution using the [trans](https://docs.racket-lang.org/pie/ind
 
 ## Exercise 4
 
+Implement [trans](https://docs.racket-lang.org/pie/index.html#%28def._%28%28lib._pie%2Fmain..rkt%29._trans%29%29) using replace:
+
+```pie
+(claim mytrans (Pi ((t U) (x t) (y t) (z t)) (-> (= t x y) (= t y z) (= t x z))))
+```
+
+[Answer](./chapter9-4-trans.rkt)
+
+## Exercise 5
+
+Implement symm using replace:
+
+```pie
+(claim mysymm (Pi ((t U) (x t) (y t)) (-> (= t x y) (= t y x))))
+```
+
+[Answer](./chapter9-5-symm.rkt)
+
+## Exercise 6 (Advanced)
+
 Define a function called `mul-assoc` that states and proves that `*` is associative.
 
 ```
@@ -74,4 +94,4 @@ To prove `mul-distrib-right` you need to use `plus-assoc` from the chapter 8 exe
 </details>
 </details>
 
-[Answer](./chapter9-4-mul-comm.rkt)
+[Answer](./chapter9-6-mul-comm.rkt)
